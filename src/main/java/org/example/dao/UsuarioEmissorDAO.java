@@ -9,14 +9,13 @@ import java.sql.SQLException;
 
 public class UsuarioEmissorDAO {
 
-    public static boolean cadastrarUsuario(String nome, Double valor, String senha) {
-        String sql = "INSERT INTO emissor (nome, valor, senha) VALUES (?, ?, ?)";
+    public static boolean cadastrarUsuario(String nome, String senha) {
+        String sql = "INSERT INTO emissor (nome, senha) VALUES (?, ?)";
 
        try(Connection conn = Conexao.conectar();
        PreparedStatement stmt = conn.prepareStatement(sql)) {
            stmt.setString(1, nome);
-           stmt.setDouble(2, valor);
-           stmt.setString(3, senha);
+           stmt.setString(2, senha);
 
            stmt.executeUpdate();
 
