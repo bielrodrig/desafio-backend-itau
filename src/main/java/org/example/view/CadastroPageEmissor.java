@@ -22,7 +22,7 @@ public class CadastroPageEmissor extends Component {
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
 
-        cadastrarButton.addActionListener(e->realizarCadastro());
+        cadastrarButton.addActionListener(e -> realizarCadastro());
     }
 
     private void realizarCadastro() {
@@ -34,12 +34,40 @@ public class CadastroPageEmissor extends Component {
             return;
         }
 
-        System.out.println("Tentando cadastrar "+nome + " " + senha);
-        UsuarioEmissorDAO dao = new UsuarioEmissorDAO();
-        dao.cadastrarUsuario(nome, senha);
-        JOptionPane.showMessageDialog(null, "Cadastro efetuado com sucesso!");
-        new LoginPageEmissor();
+        if (validarSenha(senha)) {
+            System.out.println("Tentando cadastrar " + nome + " " + senha);
+            UsuarioEmissorDAO dao = new UsuarioEmissorDAO();
+            dao.cadastrarUsuario(nome, senha);
+            JOptionPane.showMessageDialog(null, "Cadastro efetuado com sucesso!");
+            new LoginPageEmissor();
+        } else {
+            JOptionPane.showMessageDialog(null, "Escolha uma senha que atenda os requisitos");
+        }
 
+
+    }
+
+    public static boolean validarSenha(String senha) {
+        if (senha.length() < 8) {
+            return false;
+        }
+        boolean letraMaiuscula = false;
+        boolean letraMinuscula = false;
+        boolean caracterEspeciail = false;
+        boolean digito = false;
+
+        for (char c : senha.toCharArray()) {
+            if (Character.isUpperCase(c)) {
+                letraMaiuscula = true;
+            } else if (Character.isLowerCase(c)) {
+                letraMinuscula = true;
+            } else if (Character.isDigit(c)) {
+                digito = true;
+            } else if (!Character.isLetterOrDigit(c)) {
+                caracterEspeciail = true;
+            }
+        }
+        return letraMaiuscula && letraMinuscula && caracterEspeciail && digito;
     }
 
 }
