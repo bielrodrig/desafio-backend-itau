@@ -36,7 +36,12 @@ public class LoginPageEmissor {
         }
 
         UsuarioEmissorLoginDAO dao = new UsuarioEmissorLoginDAO();
-        dao.validarLogin(nome, senha);
+         boolean valido = dao.validarLogin(nome, senha);
+         if (valido) {
+             JOptionPane.showMessageDialog(null, "Login efetuado com sucesso");
+         } else {
+             JOptionPane.showMessageDialog(null, "credenciais incorretas");
+         }
 
     }
 }
