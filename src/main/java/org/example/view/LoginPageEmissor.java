@@ -4,12 +4,15 @@ import org.example.dao.UsuarioEmissorLoginDAO;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class LoginPageEmissor {
     private JTextField textField1;
     private JPanel panel1;
     private JPasswordField passwordField1;
     private JButton entrarButton;
+    private JLabel textCadastro;
     private JFrame frame;
 
     public LoginPageEmissor() {
@@ -23,7 +26,14 @@ public class LoginPageEmissor {
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
 
+
         entrarButton.addActionListener(e -> validarLogin());
+        textCadastro.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                new CadastroPageEmissor();
+                frame.dispose();
+            }
+        });
     }
 
     private void validarLogin() {

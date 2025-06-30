@@ -1,6 +1,7 @@
 package org.example.view;
 
 import org.example.dao.UsuarioEmissorDAO;
+import org.example.model.Usuario;
 
 import javax.swing.*;
 import java.awt.*;
@@ -35,9 +36,11 @@ public class CadastroPageEmissor extends Component {
         }
 
         if (validarSenha(senha)) {
+            Usuario usuario = new Usuario();
+            usuario.setNome(nome);
+            usuario.setSenha(senha);
             System.out.println("Tentando cadastrar " + nome + " " + senha);
-            UsuarioEmissorDAO dao = new UsuarioEmissorDAO();
-            dao.cadastrarUsuario(nome, senha);
+            UsuarioEmissorDAO.cadastrarUsuario(usuario);
             JOptionPane.showMessageDialog(null, "Cadastro efetuado com sucesso!");
             new LoginPageEmissor();
         } else {

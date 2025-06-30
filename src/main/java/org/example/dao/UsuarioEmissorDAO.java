@@ -1,5 +1,6 @@
 package org.example.dao;
 
+import org.example.model.Usuario;
 import org.example.util.Conexao;
 
 import java.sql.Connection;
@@ -9,13 +10,14 @@ import java.sql.SQLException;
 
 public class UsuarioEmissorDAO {
 
-    public static boolean cadastrarUsuario(String nome, String senha) {
-        String sql = "INSERT INTO emissor (nome, senha) VALUES (?, ?)";
+    public static boolean cadastrarUsuario(Usuario usuario) {
+        String sql = "INSERT INTO emissor (nome, senha, valor) VALUES (?, ?, ?)";
 
        try(Connection conn = Conexao.conectar();
        PreparedStatement stmt = conn.prepareStatement(sql)) {
-           stmt.setString(1, nome);
-           stmt.setString(2, senha);
+           stmt.setString(1, usuario.getNome());
+           stmt.setString(2, usuario.getSenha());
+           stmt.setDouble(3, 0.0);
 
            stmt.executeUpdate();
 
