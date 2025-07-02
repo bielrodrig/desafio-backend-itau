@@ -1,21 +1,24 @@
-package org.example.view;
+package org.example.view.receptor;
 
 import org.example.dao.UsuarioEmissorDAO;
+import org.example.dao.UsuarioReceptorDAO;
+import org.example.dao.UsuarioReceptorLoginDAO;
 import org.example.model.Usuario;
+import org.example.view.emissor.LoginPageEmissor;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class CadastroPageEmissor extends Component {
-    private JTextField textField1;
+public class CadastroPageReceptor {
     private JPanel panel1;
-    private JPasswordField passwordField1;
+    private JTextField textField1;
     private JButton cadastrarButton;
+    private JPasswordField passwordField1;
 
-    public CadastroPageEmissor() {
-        JFrame frame = new JFrame("Cadastro de Emissor");
-        frame.setPreferredSize(new Dimension(300, 300));
+    public CadastroPageReceptor() {
+        JFrame frame = new JFrame("Cadastro Page Receptor");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setPreferredSize(new Dimension(400, 300));
         frame.setResizable(false);
 
         frame.add(panel1);
@@ -23,15 +26,15 @@ public class CadastroPageEmissor extends Component {
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
 
-        cadastrarButton.addActionListener(e -> realizarCadastro());
+        cadastrarButton.addActionListener(e -> realizarCadastroReceptor());
     }
 
-    private void realizarCadastro() {
+    private void realizarCadastroReceptor() {
         String nome = textField1.getText();
         String senha = new String(passwordField1.getPassword());
 
         if (nome.isEmpty() || senha.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Preencha todos os campos!");
+            JOptionPane.showMessageDialog(null, "Preencha todos os campos");
             return;
         }
 
@@ -39,15 +42,13 @@ public class CadastroPageEmissor extends Component {
             Usuario usuario = new Usuario();
             usuario.setNome(nome);
             usuario.setSenha(senha);
-            System.out.println("Tentando cadastrar " + nome + " " + senha);
-            UsuarioEmissorDAO.cadastrarUsuario(usuario);
+            System.out.println("Cadastrando " + nome + " " + senha);
+            UsuarioReceptorDAO.cadastrarUsuarioReceptor(usuario);
             JOptionPane.showMessageDialog(null, "Cadastro efetuado com sucesso!");
             new LoginPageEmissor();
         } else {
-            JOptionPane.showMessageDialog(null, "Escolha uma senha que atenda os requisitos");
+            JOptionPane.showMessageDialog(null, "Escolha uma senha que atendas todos os requisitos");
         }
-
-
     }
 
     public static boolean validarSenha(String senha) {

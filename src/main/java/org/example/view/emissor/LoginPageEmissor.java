@@ -1,4 +1,4 @@
-package org.example.view;
+package org.example.view.emissor;
 
 import org.example.dao.UsuarioEmissorLoginDAO;
 
@@ -46,12 +46,14 @@ public class LoginPageEmissor {
         }
 
         UsuarioEmissorLoginDAO dao = new UsuarioEmissorLoginDAO();
-         boolean valido = dao.validarLogin(nome, senha);
-         if (valido) {
-             JOptionPane.showMessageDialog(null, "Login efetuado com sucesso");
-         } else {
-             JOptionPane.showMessageDialog(null, "credenciais incorretas");
-         }
+        boolean valido = dao.validarLogin(nome, senha);
+        if (valido) {
+            JOptionPane.showMessageDialog(null, "Login efetuado com sucesso");
+            new contaEmissor();
+            frame.dispose();
+        } else {
+            JOptionPane.showMessageDialog(null, "credenciais incorretas");
+        }
 
     }
 }

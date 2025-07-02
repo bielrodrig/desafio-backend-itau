@@ -1,5 +1,7 @@
 package org.example.view;
 
+import org.example.view.emissor.LoginPageEmissor;
+
 import javax.swing.*;
 import java.awt.*;
 
