@@ -9,7 +9,7 @@ import java.sql.SQLException;
 
 public class UsuarioReceptorDAO {
     public static boolean cadastrarUsuarioReceptor(Usuario usuario) {
-        String sql = "INSERT INTO receptor (nome, senha, valor) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO receptor (nome, senha, saldo) VALUES (?, ?, ?)";
 
         try(Connection conn = Conexao.conectar();
             PreparedStatement stmt = conn.prepareStatement(sql)) {

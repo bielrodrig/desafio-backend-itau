@@ -11,7 +11,7 @@ import java.sql.SQLException;
 public class UsuarioEmissorDAO {
 
     public static boolean cadastrarUsuario(Usuario usuario) {
-        String sql = "INSERT INTO emissor (nome, senha, valor) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO emissor (nome, senha, saldo) VALUES (?, ?, ?)";
 
        try(Connection conn = Conexao.conectar();
        PreparedStatement stmt = conn.prepareStatement(sql)) {

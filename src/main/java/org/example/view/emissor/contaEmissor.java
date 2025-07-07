@@ -26,5 +26,8 @@ public class contaEmissor {
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
+    private static void dadosEmissor(){
+
+    }
 
 }

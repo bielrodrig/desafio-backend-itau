@@ -36,7 +36,7 @@ public class CadastroPageEmissor extends Component {
         }
 
         if (validarSenha(senha)) {
-            Usuario usuario = new Usuario();
+            Usuario usuario = new Usuario(nome, senha);
             usuario.setNome(nome);
             usuario.setSenha(senha);
             System.out.println("Cadastrando " + nome + " " + senha);
