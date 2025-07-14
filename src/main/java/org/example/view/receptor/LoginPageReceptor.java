@@ -1,7 +1,16 @@
 package org.example.view.receptor;
 
+import org.example.dao.UsuarioEmissorLoginDAO;
+import org.example.dao.UsuarioReceptorDAO;
+import org.example.dao.UsuarioReceptorLoginDAO;
+import org.example.model.Usuario;
+import org.example.view.emissor.CadastroPageEmissor;
+import org.example.view.emissor.contaEmissor;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class LoginPageReceptor {
     private JTextField textField1;
@@ -20,5 +29,32 @@ public class LoginPageReceptor {
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
+
+        entrarButton.addActionListener(e -> validarLoginReceptor());
+        textCadastro.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                new CadastroPageEmissor();
+                frame.dispose();
+            }
+        });
+    }
+    private void validarLoginReceptor() {
+        String nome = textField1.getText();
+        String senha = passwordField1.getText();
+
+        if (nome.isEmpty() || senha.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Preencha todos os campos");
+            return;
+        }
+
+        UsuarioReceptorLoginDAO dao = new UsuarioReceptorLoginDAO();
+        Usuario usuarioLogado = dao.buscarPorNome(nome);  // novo método que retorna o objeto
+
+        if (usuarioLogado != null) {
+            JOptionPane.showMessageDialog(null, "Login efetuado com sucesso");
+            new contaEmissor(usuarioLogado);  // passa o usuário para a próxima tela
+        } else {
+            JOptionPane.showMessageDialog(null, "Credenciais incorretas");
+        }
     }
 }

@@ -1,6 +1,7 @@
 package org.example.view.emissor;
 
 import org.example.dao.UsuarioEmissorLoginDAO;
+import org.example.model.Usuario;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,7 +17,9 @@ public class LoginPageEmissor {
     private JFrame frame;
 
     public LoginPageEmissor() {
-        frame = new JFrame("Login Page Emissor");
+
+
+        JFrame frame = new JFrame("Login Page Receptor");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setPreferredSize(new Dimension(400, 300));
         frame.setResizable(false);
@@ -46,14 +49,14 @@ public class LoginPageEmissor {
         }
 
         UsuarioEmissorLoginDAO dao = new UsuarioEmissorLoginDAO();
-        boolean valido = dao.validarLogin(nome, senha);
-        if (valido) {
+        Usuario usuarioLogado = dao.buscarPorNome(nome);  // novo método que retorna o objeto
+
+        if (usuarioLogado != null) {
             JOptionPane.showMessageDialog(null, "Login efetuado com sucesso");
-            new contaEmissor();
+            new contaEmissor(usuarioLogado);  // passa o usuário para a próxima tela
             frame.dispose();
         } else {
-            JOptionPane.showMessageDialog(null, "credenciais incorretas");
+            JOptionPane.showMessageDialog(null, "Credenciais incorretas");
         }
-
     }
 }

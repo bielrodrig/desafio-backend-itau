@@ -1,5 +1,6 @@
 package org.example.dao;
 
+import org.example.model.Usuario;
 import org.example.util.Conexao;
 
 import java.sql.Connection;
@@ -8,19 +9,27 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class UsuarioReceptorLoginDAO {
-    public boolean validarLoginReceptor(String nome, String senha) {
-        String sql = "select * from receptor where nome = ? and senha = ?";
+    public Usuario buscarPorNome(String nome) {
+        String sql = "SELECT * FROM receptor WHERE nome = ?";
 
         try (Connection conn = Conexao.conectar();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setString(1, nome);
-            stmt.setString(2, senha);
 
+            stmt.setString(1, nome);
             ResultSet rs = stmt.executeQuery();
-            return rs.next();
+
+            if (rs.next()) {
+                Usuario receptor = new Usuario();
+                receptor.setNome(rs.getString("nome"));
+                receptor.setSenha(rs.getString("senha")); // se precisar
+                receptor.setSaldo(rs.getDouble("saldo")); // se o campo no banco se chama 'valor'
+                return receptor;
+            }
+
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
-            return false;
+            e.printStackTrace();
         }
+
+        return null;
     }
 }

@@ -2,7 +2,7 @@ package org.example.model;
 
 public class TransferenciaService {
 
-    public String realizarTransferencia(Usuario emissor, Usuario receptor, String senha, double valor, TipoTransferencia tipo) {
+    public String realizarTransferencia(Usuario emissor, Usuario receptor,double valor, TipoTransferencia tipo) {
         switch (tipo) {
             case PIX:
                 if (valor > 5000) {

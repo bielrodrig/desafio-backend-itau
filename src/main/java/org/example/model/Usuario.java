@@ -13,6 +13,10 @@ public class Usuario {
         this.autenticado = false;
     }
 
+    public Usuario() {
+        //Construtor vazio pro DAO usar sem passar os parametros
+    }
+
     public boolean estaAutenticado() {
         return autenticado;
     }
