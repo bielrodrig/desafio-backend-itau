@@ -1,11 +1,9 @@
 package org.example;
 
 import org.example.view.emissor.LoginPageEmissor;
-import org.example.view.receptor.LoginPageReceptor;
-import org.example.view.receptor.contaReceptor;
 
 public class Main {
     public static void main(String[] args) {
-        new LoginPageReceptor();
+        new LoginPageEmissor();
     }
 }

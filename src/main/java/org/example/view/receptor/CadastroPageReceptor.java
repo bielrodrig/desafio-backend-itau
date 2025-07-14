@@ -1,8 +1,6 @@
 package org.example.view.receptor;
 
-import org.example.dao.UsuarioEmissorDAO;
 import org.example.dao.UsuarioReceptorDAO;
-import org.example.dao.UsuarioReceptorLoginDAO;
 import org.example.model.Usuario;
 import org.example.view.emissor.LoginPageEmissor;
 

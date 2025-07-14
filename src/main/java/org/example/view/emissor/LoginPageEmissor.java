@@ -10,16 +10,13 @@ import java.awt.event.MouseEvent;
 
 public class LoginPageEmissor {
     private JTextField textField1;
-    private JPanel panel1;
     private JPasswordField passwordField1;
     private JButton entrarButton;
+    private JPanel panel1;
     private JLabel textCadastro;
-    private JFrame frame;
 
     public LoginPageEmissor() {
-
-
-        JFrame frame = new JFrame("Login Page Receptor");
+        JFrame frame = new JFrame("Login Page Emissor");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setPreferredSize(new Dimension(400, 300));
         frame.setResizable(false);
@@ -29,7 +26,6 @@ public class LoginPageEmissor {
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
 
-
         entrarButton.addActionListener(e -> validarLogin());
         textCadastro.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
@@ -38,7 +34,6 @@ public class LoginPageEmissor {
             }
         });
     }
-
     private void validarLogin() {
         String nome = textField1.getText();
         String senha = passwordField1.getText();
@@ -54,9 +49,10 @@ public class LoginPageEmissor {
         if (usuarioLogado != null) {
             JOptionPane.showMessageDialog(null, "Login efetuado com sucesso");
             new contaEmissor(usuarioLogado);  // passa o usuário para a próxima tela
-            frame.dispose();
+
         } else {
             JOptionPane.showMessageDialog(null, "Credenciais incorretas");
         }
     }
+
 }

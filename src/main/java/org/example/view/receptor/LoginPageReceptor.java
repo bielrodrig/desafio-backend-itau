@@ -33,7 +33,7 @@ public class LoginPageReceptor {
         entrarButton.addActionListener(e -> validarLoginReceptor());
         textCadastro.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
-                new CadastroPageEmissor();
+                new CadastroPageReceptor();
                 frame.dispose();
             }
         });
@@ -52,7 +52,8 @@ public class LoginPageReceptor {
 
         if (usuarioLogado != null) {
             JOptionPane.showMessageDialog(null, "Login efetuado com sucesso");
-            new contaEmissor(usuarioLogado);  // passa o usuário para a próxima tela
+            new contaReceptor(usuarioLogado);
+            // passa o usuário para a próxima tela
         } else {
             JOptionPane.showMessageDialog(null, "Credenciais incorretas");
         }
