@@ -6,12 +6,15 @@ import org.example.model.Usuario;
 
 import javax.swing.*;
 import java.awt.*;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.util.Locale;
 
 public class contaEmissor {
     private Usuario emissor;
-    private JTextField textField1;
+    private JTextField textField1; // Para o nome do receptor
     private JButton enviarButton;
-    private JTextField textField2;
+    private JTextField textField2; // Para o valor da transferência
     private JPanel panel1;
     private JLabel userName;
     private JLabel valorUser;
@@ -42,19 +45,34 @@ public class contaEmissor {
     }
 
     private void processarTransferencia() {
+        // 1. Pega o texto do campo de valor e do nome do receptor
+        String nomeReceptor = textField2.getText();
+        String valorTexto = textField1.getText();
+
+        // --- VALIDAÇÃO REFORÇADA ---
+
+        // 2. Verifica se o nome do receptor foi preenchido
+        if (nomeReceptor.trim().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Informe o nome do receptor.");
+            return; // Para a execução do método aqui
+        }
+
+        // 3. Verifica se o campo de valor está vazio
+        if (valorTexto == null || valorTexto.trim().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "O campo de valor não pode estar vazio.");
+            return; // Para a execução do método aqui
+        }
+
+        // --- FIM DA VALIDAÇÃO ---
+
+
         try {
-            String nomeReceptor = textField1.getText(); // Nome do receptor
-            double valor = Double.parseDouble(textField2.getText()); // Valor da transferência
+            // 4. Se passou nas validações, agora limpamos e convertemos o valor
+            String valorLimpo = valorTexto.trim().replace(",", ".");
+            double valor = Double.parseDouble(valorLimpo);
 
-            if (nomeReceptor.isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Informe o nome do receptor.");
-                return;
-            }
-
-            // Tipo de transferência fixo por enquanto (pode melhorar depois com JComboBox)
+            // O restante do seu código continua aqui...
             TipoTransferencia tipo = TipoTransferencia.PIX;
-
-            // Buscar o receptor no banco
             Usuario receptor = new org.example.dao.UsuarioReceptorLoginDAO().buscarPorNome(nomeReceptor);
 
             if (receptor == null) {
@@ -66,16 +84,19 @@ public class contaEmissor {
             String resultado = service.realizarTransferencia(emissor, receptor, valor, tipo);
 
             JOptionPane.showMessageDialog(null, resultado);
-
-            // Atualiza o saldo na tela
             valorUser.setText("R$ " + String.format("%.2f", emissor.getSaldo()));
 
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "Digite um valor válido para a transferência.");
+            // Se mesmo assim cair aqui, o usuário digitou algo como "abc" ou "50 e 25"
+            JOptionPane.showMessageDialog(null, "Valor inválido. Por favor, digite apenas números (ex: 50.25).");
+
+            // DICA DE DEBUG: Imprima o que causou o erro no console
+            System.err.println("Erro de conversão para o valor: '" + textField2.getText() + "'");
+            e.printStackTrace(); // Mostra o erro completo no console de execução
+
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Erro: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Erro inesperado: " + e.getMessage());
+            e.printStackTrace();
         }
     }
-
-
 }

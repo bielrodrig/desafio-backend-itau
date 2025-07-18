@@ -33,4 +33,22 @@ public class UsuarioEmissorLoginDAO {
 
         return null;
     }
+
+    public boolean atualizarSaldo(Usuario usuario) {
+        String sql = "UPDATE emissor SET saldo = ? WHERE nome = ?";
+
+        try(Connection conn = Conexao.conectar();
+            PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setDouble(1, usuario.getSaldo());
+            stmt.setString(2, usuario.getNome());
+
+            int linhasAfetadas = stmt.executeUpdate();
+
+            return linhasAfetadas > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }

@@ -17,7 +17,7 @@ public class UsuarioEmissorDAO {
        PreparedStatement stmt = conn.prepareStatement(sql)) {
            stmt.setString(1, usuario.getNome());
            stmt.setString(2, usuario.getSenha());
-           stmt.setDouble(3, 0.0);
+           stmt.setDouble(3, 500);
 
            stmt.executeUpdate();
 

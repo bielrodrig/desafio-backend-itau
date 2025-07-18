@@ -1,5 +1,9 @@
 package org.example.model;
 
+import org.example.dao.UsuarioEmissorDAO;
+import org.example.dao.UsuarioEmissorLoginDAO;
+import org.example.dao.UsuarioReceptorLoginDAO;
+
 public class TransferenciaService {
 
     public String realizarTransferencia(Usuario emissor, Usuario receptor,double valor, TipoTransferencia tipo) {
@@ -23,10 +27,17 @@ public class TransferenciaService {
         if (emissor.getSaldo() < valor) {
             return "Sua transferência não pode ser concluida por conta que não tem saldo na conta";
         }
-        emissor.debitar(valor);
-        receptor.creditar(valor);
 
-        return "Transferência concluida com sucesso" + "saldo do emissor: " + emissor.getSaldo() + "saldo do receptor: " + receptor.getSaldo();
+        emissor.setSaldo(emissor.getSaldo() - valor);
+        receptor.setSaldo(receptor.getSaldo() + valor);
 
+        boolean sucessoEmissor = new UsuarioEmissorLoginDAO().atualizarSaldo(emissor);
+        boolean sucessorReceptor = new UsuarioReceptorLoginDAO().atualizarSaldo(receptor);
+
+        if (sucessoEmissor && sucessorReceptor) {
+            return "Transferência efetuada com sucesso";
+        } else {
+            return "Erro ao atualizar a transferência";
+        }
     }
 }

@@ -9,7 +9,7 @@ public class Usuario {
     public Usuario(String nome, String senha) {
         this.nome = nome;
         this.senha = senha;
-        this.saldo = 0.0; // começa com R$ 0,00
+        this.saldo = 500; // começa com R$ 0,00
         this.autenticado = false;
     }
 
